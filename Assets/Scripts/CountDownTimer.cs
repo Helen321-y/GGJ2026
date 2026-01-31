@@ -29,7 +29,7 @@ public class CountDownTimer : MonoBehaviour
 
         if (StartOnAwake)
         {
-            startTimer();
+            StartTimer();
         }
     }
 
@@ -54,7 +54,7 @@ public class CountDownTimer : MonoBehaviour
         UpdateUI();
     }
 
-    private void startTimer()
+    public void StartTimer()
     {
         running = true;
     }
