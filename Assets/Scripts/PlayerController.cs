@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     
     [Header("Jump")]
     private float jumpForce = 16.0f;
+    private bool canDoubleJump;
+    private bool getDoubleJumpMask;
 
     [Header("Detections")]
     private bool isGrounded;
@@ -51,14 +53,18 @@ public class PlayerController : MonoBehaviour
             CheckMovementDirection();
             ApplyMovement();
         }
+
+        if (isGrounded)
+        {
+            canMove = true;
+
+            if(getDoubleJumpMask)
+                canDoubleJump = true;
+            else
+                canDoubleJump = false;
+        }
         
     }
-
-    private void FixedUpdate() 
-    {
-        
-    }
-
 
     private void CheckInput()
     {
@@ -111,12 +117,24 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+        else if (getDoubleJumpMask && canDoubleJump)
+        {
+            canDoubleJump = false;
+            Jump();
+            canMove = false;
+        }
     }
 
     private void Jump()
     {
         _rb.velocity = new Vector2(_rb.velocity.x, jumpForce);
         isGrounded = false;
+    }
+
+    public void EnableDoubleJump()
+    {
+        getDoubleJumpMask = true;
+        canDoubleJump = true;
     }
 
     private void CollisionCheck()
