@@ -5,7 +5,6 @@ using UnityEngine;
 public class FastFallMask : MonoBehaviour
 {
      [SerializeField] private string playerTag = "Player";
-    [SerializeField] private bool autoEquip = true;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -15,7 +14,7 @@ public class FastFallMask : MonoBehaviour
         if (player == null) 
         return;
 
-        player.UnlockFastFall();
+        player.UnlockSlowFall();
         Destroy(gameObject);
     }
 }

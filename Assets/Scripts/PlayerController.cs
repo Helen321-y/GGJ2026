@@ -26,11 +26,10 @@ public class PlayerController : MonoBehaviour
     private bool canDoubleJump;
     private bool getDoubleJumpMask;
 
-    [Header("Fast Fall")]
-    [SerializeField] private float fastFallSpeed = -25f;      
-    [SerializeField] private float normalFallClamp = -30f;    
-    private bool hasFastFall = false;                         
-    private bool fastFallEquipped = false;   
+    [Header("Slow Fall")]
+    [SerializeField] private float slowFallSpeed;       
+    private bool hasSlowFall = false;                         
+    private bool slowFallEquipped = false;   
 
     [Header("Detections")]
     private bool isGrounded;
@@ -71,7 +70,7 @@ public class PlayerController : MonoBehaviour
         }
 
         
-        HandleFastFall();
+        HandleSlowFall();
         
     }
 
@@ -147,29 +146,21 @@ public class PlayerController : MonoBehaviour
         canDoubleJump = true;
     }
 
-     private void HandleFastFall()
-    {
-       if (!hasFastFall || !fastFallEquipped) return;
+     private void HandleSlowFall()
+{
+    if (!hasSlowFall || !slowFallEquipped) return;
     if (isGrounded) return;
 
-    if (_rb.velocity.y < 0f)
+    if (_rb.velocity.y < slowFallSpeed)
     {
-        if (_rb.velocity.y > fastFallSpeed)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, fastFallSpeed);
-        }
-
-        if (_rb.velocity.y < normalFallClamp)
-        {
-            _rb.velocity = new Vector2(_rb.velocity.x, normalFallClamp);
-        }
+        _rb.velocity = new Vector2(_rb.velocity.x, slowFallSpeed);
     }
-    }
+}
 
-        public void UnlockFastFall()
+    public void UnlockSlowFall()
     {
-        hasFastFall = true;
-        fastFallEquipped = true;
+        hasSlowFall = true;
+        slowFallEquipped = true;
     }
 
     private void CollisionCheck()
