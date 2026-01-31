@@ -41,15 +41,21 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        
+        CollisionCheck();
         CheckMovementDirection();
         CheckInput();
-        CollisionCheck();
 
         if(canMove)
         {
             CheckMovementDirection();
             ApplyMovement();
         }
+        
+    }
+
+    private void FixedUpdate() 
+    {
         
     }
 
