@@ -47,8 +47,8 @@
   <Project Path="Unity.2D.PixelPerfect.csproj" />
   <Project Path="Unity.2D.PixelPerfect.Editor.csproj" />
   <Project Path="Unity.2D.Common.Runtime.csproj" />
-  <Project Path="Unity.Mathematics.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Unity.Mathematics.Editor.csproj" />
   <Project Path="Unity.Collections.BurstCompatibilityGen.csproj" />
   <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
   <Project Path="Unity.Collections.DocCodeSamples.csproj" />
