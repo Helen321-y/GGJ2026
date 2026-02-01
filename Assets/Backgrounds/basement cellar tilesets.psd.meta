@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 42
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,9 +70,9 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,7 +95,175 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: basement cellar tilesets_0
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 712
+        width: 506
+        height: 368
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 860830eb88a8ace43b60363c0b4eafbc
+      internalID: -1378771737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 148
+        width: 133
+        height: 827
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a65a6d5ec011ca41a0b30a380774bdc
+      internalID: 1850540620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_2
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 274
+        width: 612
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e38c1b3db20843c48944eebf7902544b
+      internalID: -594949398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_3
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 265
+        width: 604
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c61ea69a44a10a347ab1e4386f83765e
+      internalID: 1039193861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_4
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 525
+        width: 528
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08ff42e7c59decf4cb455f11b6fa7112
+      internalID: 1257202491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_5
+      rect:
+        serializedVersion: 2
+        x: 670
+        y: 32
+        width: 787
+        height: 152
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea0e69caac14fc94c9c7a41aad660ddd
+      internalID: -653380118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_6
+      rect:
+        serializedVersion: 2
+        x: 1785
+        y: 154
+        width: 132
+        height: 811
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0cbf557468d9af499dfba492201d995
+      internalID: 1181411893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: basement cellar tilesets_7
+      rect:
+        serializedVersion: 2
+        x: 1277
+        y: 664
+        width: 503
+        height: 416
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ef7a7f53eb2b5c43ab6118f881f0900
+      internalID: 1328384793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -106,7 +274,15 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      basement cellar tilesets_0: -1378771737
+      basement cellar tilesets_1: 1850540620
+      basement cellar tilesets_2: -594949398
+      basement cellar tilesets_3: 1039193861
+      basement cellar tilesets_4: 1257202491
+      basement cellar tilesets_5: -653380118
+      basement cellar tilesets_6: 1181411893
+      basement cellar tilesets_7: 1328384793
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
