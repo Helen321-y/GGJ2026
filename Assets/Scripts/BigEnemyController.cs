@@ -14,6 +14,7 @@ public class BigEnemyController : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform[] patrolPoints;
+    private Animator animator;
 
     private SpriteRenderer spriteRenderer;
 
@@ -62,6 +63,18 @@ public class BigEnemyController : MonoBehaviour
     private float hitStunEndTime = -999f;
     private bool IsHitStunned => Time.time < hitStunEndTime;
 
+    [Header("Spore VFX")]
+    [SerializeField] private GameObject sporeVfxPrefab;
+    [SerializeField] private Vector3 sporeVfxOffset = Vector3.zero;
+
+
+    // Animation state names
+    private string currentAnimState;
+    private const string ANIM_DEATH = "BigEnemy_Death";
+    private const string ANIM_IDLE = "BigEnemy_Idle";
+    private const string ANIM_WALK = "BigEnemy_Walk";
+    private const string ANIM_SPORE = "BigEnemy_Spore";
+    private const string ANIM_ATTACK = "BigEnemy_Attack";
     [Header("Optional")]
     [SerializeField] private bool faceMoveDirection = true;
 
@@ -80,12 +93,19 @@ public class BigEnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void Awake()
     {
-        if (rb == null) rb = GetComponent<Rigidbody2D>();
-        if (spriteRenderer == null) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (rb == null) 
+            rb = GetComponent<Rigidbody2D>();
+
+        if (spriteRenderer == null) 
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (animator == null)
+            animator = GetComponent<Animator>();
 
         spawnPos = rb != null ? rb.position : (Vector2)transform.position;
 
@@ -121,6 +141,14 @@ public class BigEnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        var health = GetComponent<EnemyHealth>();
+        if (health != null && health.IsDead)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
+
+
         // Target invalid 
         if (!IsTargetValid() && (playerDetected || player != null))
         {
@@ -132,6 +160,8 @@ public class BigEnemyController : MonoBehaviour
         {
             if (rb != null) rb.velocity = new Vector2(0f, rb.velocity.y);
             if (playerDetected) lastSeenTime = Time.time;
+
+            UpdateAnimation();
             return;
         }
 
@@ -139,7 +169,8 @@ public class BigEnemyController : MonoBehaviour
         if (isCastingSpore)
         {
             if (rb != null) rb.velocity = Vector2.zero;
-            SetDebugColor(Color.blue);
+            
+            UpdateAnimation();
             return;
         }
 
@@ -147,6 +178,8 @@ public class BigEnemyController : MonoBehaviour
         if (IsAttackLocked)
         {
             if (rb != null) rb.velocity = new Vector2(0f, rb.velocity.y);
+
+            UpdateAnimation();
             return;
         }
 
@@ -169,7 +202,52 @@ public class BigEnemyController : MonoBehaviour
         }
 
         TrySporeAttack();
+        UpdateAnimation();
     }
+
+    private void ChangeAnimationState(string newState)
+{
+    if (animator == null) return;
+    if (currentAnimState == newState) return;
+
+    animator.Play(newState);
+    currentAnimState = newState;
+}
+
+    private void UpdateAnimation()
+    {
+        // If you later have EnemyHealth.IsDead, put it here:
+        // if (enemyHealth != null && enemyHealth.IsDead) { ChangeAnimationState(ANIM_DEATH); return; }
+
+        // Casting spore has highest priority (besides death)
+        if (isCastingSpore)
+        {
+            ChangeAnimationState(ANIM_SPORE);
+            return;
+        }
+
+        // If you want hitstun anim, put it here:
+        if (IsHitStunned) 
+        { 
+            ChangeAnimationState(ANIM_IDLE); 
+            return; 
+        
+        }
+
+        // If you want attack anim to play when attacking/locked
+        if (IsAttackLocked || state == State.Attack)
+        {
+            ChangeAnimationState(ANIM_ATTACK);
+            return;
+        }
+
+        // Movement-based
+        if (rb != null && Mathf.Abs(rb.velocity.x) > 0.01f)
+            ChangeAnimationState(ANIM_WALK);
+        else
+        ChangeAnimationState(ANIM_IDLE);
+}
+
 
     private void UpdateState()
     {
@@ -197,7 +275,6 @@ public class BigEnemyController : MonoBehaviour
 
     private void PatrolTick()
     {
-        SetDebugColor(Color.white);
 
         if (rb == null || patrolPoints == null || patrolPoints.Length == 0)
         {
@@ -226,7 +303,6 @@ public class BigEnemyController : MonoBehaviour
 
     private void ChaseTick()
     {
-        SetDebugColor(Color.black);
 
         if (rb == null)
             return;
@@ -242,7 +318,6 @@ public class BigEnemyController : MonoBehaviour
 
     private void AttackTick()
     {
-        SetDebugColor(Color.red);
 
         if (rb == null)
             return;
@@ -261,6 +336,8 @@ public class BigEnemyController : MonoBehaviour
         nextAttackTime = Time.time + attackCooldown;
         attackLockEndTime = Time.time + attackLockTime;
 
+        ChangeAnimationState(ANIM_ATTACK);
+
         if (player == null)
             return;
 
@@ -277,7 +354,6 @@ public class BigEnemyController : MonoBehaviour
 
     private void ReturnTick()
     {
-        SetDebugColor(Color.gray);
 
         if (rb == null)
             return;
@@ -368,9 +444,9 @@ public class BigEnemyController : MonoBehaviour
         isCastingSpore = true;
 
         if (rb != null) rb.velocity = Vector2.zero;
-        SetDebugColor(Color.blue);
 
         yield return new WaitForSeconds(sporeWindup);
+        SpawnSporeVfx();
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, sporeRadius, playerLayer);
         foreach (var hit in hits)
@@ -423,11 +499,22 @@ public class BigEnemyController : MonoBehaviour
         ScheduleNextSpore();
     }
 
-    private void SetDebugColor(Color c)
+    private void SpawnSporeVfx()
+{
+    if (sporeVfxPrefab == null) return;
+
+    var go = Instantiate(sporeVfxPrefab, transform.position + sporeVfxOffset, Quaternion.identity);
+    var auto = go.GetComponent<AutoDestroyParticles>();
+    if (auto != null) auto.Play();
+    else
     {
-        if (spriteRenderer != null)
-            spriteRenderer.color = c;
+        // fallback: if prefab forgot the script, still try play particles
+        foreach (var ps in go.GetComponentsInChildren<ParticleSystem>(true))
+            ps.Play(true);
+        Destroy(go, 2f);
     }
+}
+
 
     private void OnDrawGizmosSelected()
     {
