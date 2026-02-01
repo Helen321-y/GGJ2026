@@ -508,7 +508,7 @@ public class BigEnemyController : MonoBehaviour
     if (auto != null) auto.Play();
     else
     {
-        // fallback: if prefab forgot the script, still try play particles
+       
         foreach (var ps in go.GetComponentsInChildren<ParticleSystem>(true))
             ps.Play(true);
         Destroy(go, 2f);
