@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     private float knockbackEndTime;
 
     [Header("Attack")]
-    [SerializeField] private KeyCode attackKey = KeyCode.J;
+    [SerializeField] private KeyCode attackKey = KeyCode.Mouse0;
     [SerializeField] private Collider2D attackCollider;
     [SerializeField] private AttackHitbox attackHitbox;
     [SerializeField] private float attackCooldown = 0.25f;
@@ -209,7 +209,7 @@ public class PlayerController : MonoBehaviour
     public void Knockback(int direction)
     {
         if (isDead) return;
-        
+
         FlashHit(); 
 
         // Cancel attack if needed 
